@@ -1,0 +1,121 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.fresco.play</groupId>
+  <artifactId>maven-profile-env</artifactId>
+  <packaging>jar</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>maven-plugin-exec</name>
+  <url>http://maven.apache.org</url>
+
+  <!-- Insert dependencies here -->
+  <dependencies>
+    <dependency>
+    <groupId>junit</groupId>
+    <artifactId>junit</artifactId>
+    <version>3.8.1</version>
+    <scope>test</scope>
+    </dependency>
+    	<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.3</version>
+			<scope>compile</scope>
+		</dependency>
+  </dependencies>
+
+  <build>
+     <!--  Configure Resource filtering here -->
+     <!--  Configure Plugins here -->
+     <filters>
+	
+	            <filter>src/main/resources/db.${env}.properties</filter>
+        </filters>
+
+        <!-- Map ${} into resources -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>*.properties</include>
+                </includes>
+            </resource>
+        </resources>
+
+     <plugins>
+     <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.6.0</version>
+        <configuration>
+            <mainClass>com.fresco.play.App</mainClass>
+        </configuration>
+      </plugin>
+
+      <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.8.1</version>
+          <configuration>
+             <source>1.8</source>
+             <target>1.8</target>
+          </configuration>
+        </plugin>
+        
+      </plugins>
+         
+  </build>
+  
+  <profiles>
+      <!-- Configure Profiles here -->
+      
+
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+              <env>dev</env>
+              <db.env>dev</db.env>
+             
+            </properties>
+        </profile>
+
+        <profile>
+            <id>qa</id>
+            <properties>
+              <env>qa</env>
+              <db.env>qa</db.env>
+             
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+              <env>prod</env>
+              <db.env>prod</db.env>
+             
+            </properties>
+        </profile>
+
+          <profile>
+            <id>prod1</id>
+            <properties>
+              <env>prod1</env>
+              <db.env>prod1</db.env>
+             <db.url></db.url>
+             <db.username></db.username>
+             <db.password></db.password>
+            </properties>
+        </profile>
+
+ 
+
+  </profiles>
+
+ 
+    
+</project>
+
